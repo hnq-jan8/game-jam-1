@@ -1,34 +1,32 @@
 using System.Collections;
 using System.Collections.Generic;
 using UnityEngine;
+using UnityEngine.UI;
 
-public class Enemy : MonoBehaviour
+public class Typer : MonoBehaviour
 {
-
-    [SerializeField]
-    public float speed = 1.0f;
-
-    // Character to be typed
-    [SerializeField]
-    public string word = "word";
-
-    private string remainingWord = null;
+    // Characters to be typed
+    public string word = null;
 
     // Start is called before the first frame update
-    void Start()
+    private void Start()
     {
-        remainingWord = word;
+        SetCurrentWord();
     }
 
     // Update is called once per frame
-    void Update()
+    private void Update()
     {
         CheckInput();
     }
 
-    public void Kill()
+    private void SetCurrentWord()
     {
-        Destroy(gameObject);
+        // string wordsBank = "ABCDEFGHIJKLMNOPQRSTUVWXYZabcdefghijklmnopqrstuvwxyz0123456789";
+        string wordsBank = "abcdefghijklmnopqrstuvwxyz";
+        word = wordsBank[Random.Range(0, wordsBank.Length)].ToString();
+
+        Debug.Log(word);
     }
 
     private void CheckInput()
@@ -49,25 +47,12 @@ public class Enemy : MonoBehaviour
         // Kill the enemy if the letter is correct
         if (IsCorrectLetter())
         {
-            word = word.Substring(1);
-
-            if (IsWordTyped())
-            {
-                Kill();
-                return;
-            }
-
-            Debug.Log("'" + word + "'");
+            SetCurrentWord();
         }
     }
 
     private bool IsCorrectLetter()
     {
-        return word.StartsWith(Input.inputString);
-    }
-
-    private bool IsWordTyped()
-    {
-        return word.Length == 0;
+        return Input.inputString == word;
     }
 }

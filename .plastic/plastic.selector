@@ -1,0 +1,4 @@
+repository "game-jam-1@LaziiStudio@cloud"
+  path "/"
+    br "/main"
+    co "/main"

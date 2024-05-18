@@ -698,11 +698,11 @@ PlayerSettings:
   apiCompatibilityLevel: 6
   activeInputHandler: 0
   windowsGamepadBackendHint: 0
-  cloudProjectId: fcc445d7-2f07-4bad-b9e7-e23d7ad5d3fa
+  cloudProjectId: 5508d0df-96e3-4fd8-9687-6c0a7ebc6e60
   framebufferDepthMemorylessMode: 0
   qualitySettingsNames: []
-  projectName: Plant_Game_Jam
-  organizationId: coldgod04
+  projectName: game-jam-1
+  organizationId: unity_a27ec65525775773b759
   cloudEnabled: 0
   legacyClampBlendShapeWeights: 0
   hmiLoadingImage: {fileID: 0}
