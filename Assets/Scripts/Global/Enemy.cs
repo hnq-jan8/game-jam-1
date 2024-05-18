@@ -4,15 +4,13 @@ using UnityEngine;
 
 public class Enemy : MonoBehaviour
 {
-
-    [SerializeField]
-    public float speed = 1.0f;
-
-    // Character to be typed
     [SerializeField]
     public string word = "word";
 
     private string remainingWord = null;
+    
+    [field: SerializeField]
+    public float speed { get; private set; }
 
     // Start is called before the first frame update
     void Start()
@@ -24,11 +22,9 @@ public class Enemy : MonoBehaviour
     void Update()
     {
         CheckInput();
-    }
-
-    public void Kill()
-    {
-        Destroy(gameObject);
+        
+        // move towards the player
+        transform.position = Vector2.MoveTowards(transform.position, Player.Instance.transform.position, speed * Time.deltaTime);
     }
 
     private void CheckInput()
@@ -53,7 +49,7 @@ public class Enemy : MonoBehaviour
 
             if (IsWordTyped())
             {
-                Kill();
+                KillSelf();
                 return;
             }
 
@@ -69,5 +65,22 @@ public class Enemy : MonoBehaviour
     private bool IsWordTyped()
     {
         return word.Length == 0;
+    }
+
+    private float originalSpeed;
+    public void StopMoving()
+    {
+        originalSpeed = speed;
+        speed = 0;
+    }
+
+    public void ContinueMoving()
+    {
+        speed = originalSpeed;
+    }
+
+    public void KillSelf()
+    {
+        Destroy(this.gameObject);
     }
 }

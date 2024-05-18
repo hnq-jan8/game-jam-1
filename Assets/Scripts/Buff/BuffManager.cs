@@ -15,8 +15,6 @@ public class BuffManager : MonoBehaviour
     [SerializeField]
     private List<AbstractBuff> buffList = new List<AbstractBuff>();
 
-    public GameObject test;
-
     // Start is called before the first frame update
     void Awake()
     {
@@ -28,12 +26,12 @@ public class BuffManager : MonoBehaviour
     {
         if(Input.GetKeyDown(KeyCode.Space))
         {
-            TriggerBuff(BuffType.TIME_FREEZE);
+            TriggerBuff(BuffType.KILL_ALL);
         }
     }
 
     public void TriggerBuff(BuffType type)
     {
-        buffList[(int)type].DoBuff(this);
+        buffList[(int)type].DoBuff();
     }
 }

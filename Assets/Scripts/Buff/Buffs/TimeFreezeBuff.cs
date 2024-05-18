@@ -3,20 +3,28 @@ using System.Collections.Generic;
 using UnityEngine;
 using UnityEngine.Events;
 
-[CreateAssetMenu(fileName = "Time Freeze Buff", menuName = "Buff/Time Freeze")]
 public class TimeFreezeBuff : AbstractBuff
 {
     [SerializeField]
+    private UnityEvent OnFreezeTime;
+
+    [SerializeField]
+    private UnityEvent OnUnfreezeTime;
+
+    [SerializeField]
     private float freezeTime;
 
-    public override void DoBuff(MonoBehaviour caller)
+    private Enemy[] enemies;
+
+    public override void DoBuff()
     {
-        caller.StartCoroutine(BeginTimeFreeze());
+        enemies = FindObjectsOfType<Enemy>();
+
+        StartCoroutine(BeginTimeFreeze());
     }
 
     private IEnumerator BeginTimeFreeze()
     {
-        Debug.LogError("A");
         FreezeTime();
 
         yield return new WaitForSecondsRealtime(freezeTime);
@@ -26,11 +34,21 @@ public class TimeFreezeBuff : AbstractBuff
 
     private void FreezeTime()
     {
-        Time.timeScale = 0f;
+        OnFreezeTime.Invoke();
+        foreach(Enemy e in enemies)
+        {
+            //Stop enemies from moving (there should be a function in Enemy script that allows this)
+            e.StopMoving();
+        }
     }
 
     private void UnfreezeTime()
     {
-        Time.timeScale = 1f;
+        OnUnfreezeTime.Invoke();
+        foreach (Enemy e in enemies)
+        {
+            //Enable enemies to move (there should be a function in Enemy script that allows this)
+            e.ContinueMoving();
+        }
     }
 }
